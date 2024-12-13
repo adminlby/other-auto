@@ -1,3 +1,9 @@
+let lightoff = 0
+let lighton = 0
+function lightremoteserver () {
+    lightoff = 0
+    lighton = 1
+}
 // force open fan
 input.onButtonPressed(Button.A, function () {
     pins.digitalWritePin(DigitalPin.P0, 1)
@@ -25,9 +31,9 @@ function Water_immersion_detection () {
         basic.pause(200)
         radio.setGroup(100)
         while (pins.analogReadPin(AnalogReadWritePin.P1) >= 30) {
-            radio.sendValue("light", 1)
+            radio.sendValue("light", lighton)
             basic.pause(1000)
-            radio.sendValue("light", 0)
+            radio.sendValue("light", lightoff)
         }
     } else {
         pins.servoWritePin(AnalogPin.P4, 90)
