@@ -22,6 +22,13 @@ function Water_immersion_detection () {
         pins.servoWritePin(AnalogPin.P4, 180)
         basic.pause(500)
         music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+        basic.pause(200)
+        radio.setGroup(100)
+        while (pins.analogReadPin(AnalogReadWritePin.P1) >= 30) {
+            radio.sendValue("light", 1)
+            basic.pause(1000)
+            radio.sendValue("light", 0)
+        }
     } else {
         pins.servoWritePin(AnalogPin.P4, 90)
         music.stopAllSounds()
@@ -29,5 +36,6 @@ function Water_immersion_detection () {
 }
 basic.forever(function () {
     Water_immersion_detection()
+    fan_ctrl()
     basic.showNumber(pins.analogReadPin(AnalogReadWritePin.P1))
 })
