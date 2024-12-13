@@ -28,9 +28,16 @@ function Water_immersion_detection () {
         pins.servoWritePin(AnalogPin.P4, 180)
         basic.pause(500)
         music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
-        basic.pause(200)
         radio.setGroup(100)
         while (pins.analogReadPin(AnalogReadWritePin.P1) >= 30) {
+            basic.clearScreen()
+            basic.showLeds(`
+                # . . . #
+                . # . # .
+                . . # . .
+                . # . # .
+                # . . . #
+                `)
             radio.sendValue("light", lighton)
             basic.pause(1000)
             radio.sendValue("light", lightoff)
