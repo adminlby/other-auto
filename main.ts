@@ -51,4 +51,5 @@ basic.forever(function () {
     Water_immersion_detection()
     fan_ctrl()
     basic.showNumber(pins.analogReadPin(AnalogReadWritePin.P1))
+    radio.sendNumber(pins.analogReadPin(AnalogReadWritePin.P1))
 })
