@@ -1,5 +1,6 @@
 let lightoff = 0
 let lighton = 0
+let lightserveron = 0
 function lightremoteserver () {
     lightoff = 0
     lighton = 1
@@ -29,15 +30,18 @@ function Water_immersion_detection () {
         basic.pause(500)
         music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
         radio.setGroup(100)
+        basic.clearScreen()
+        basic.showLeds(`
+            # . . . #
+            . # . # .
+            . . # . .
+            . # . # .
+            # . . . #
+            `)
         while (pins.analogReadPin(AnalogReadWritePin.P1) >= 30) {
-            basic.clearScreen()
-            basic.showLeds(`
-                # . . . #
-                . # . # .
-                . . # . .
-                . # . # .
-                # . . . #
-                `)
+            lightserveron = 47
+            basic.pause(100)
+            radio.sendNumber(lightserveron)
             radio.sendValue("light", lighton)
             basic.pause(1000)
             radio.sendValue("light", lightoff)
@@ -51,5 +55,5 @@ basic.forever(function () {
     Water_immersion_detection()
     fan_ctrl()
     basic.showNumber(pins.analogReadPin(AnalogReadWritePin.P1))
-    radio.sendNumber(pins.analogReadPin(AnalogReadWritePin.P1))
+    lightserveron = 1
 })
